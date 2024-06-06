@@ -9,32 +9,33 @@ function App() {
   const [tasks, setTasks] = useState(TASKS);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  function handleDelete(taskToDelete) {
-    const filteredTasks = tasks.filter(task => task.id !== taskToDelete.id);
+  const handleDelete = (taskToDelete) => {
+    const filteredTasks = tasks.filter((task) => task.id !== taskToDelete.id);
     setTasks(filteredTasks);
-  }
+  };
 
-  function handleCategoryChange(category) {
+  const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-  }
+  };
 
-  const displayedTasks = selectedCategory === "All" 
-    ? tasks 
-    : tasks.filter(task => task.category === selectedCategory);
+  const displayedTasks =
+    selectedCategory === "All"
+      ? tasks
+      : tasks.filter((task) => task.category === selectedCategory);
 
-  function handleSubmit(text, category) {
-    const newTask = {
-      id: Math.floor(Math.random() * 10000),
-      text,
-      category,
-    };
-    setTasks([...tasks, newTask]);
-  }
+      const handleSubmit = (newTask) => {
+        const { text, category } = newTask;
+        const id = Math.floor(Math.random() * 10000);
+        setTasks([...tasks, { id, text, category }]);
+      };
 
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter categories={CATEGORIES} onCategoryChange={handleCategoryChange} />
+      <CategoryFilter
+        categories={CATEGORIES}
+        onCategoryChange={handleCategoryChange}
+      />
       <NewTaskForm categories={CATEGORIES} onTaskFormSubmit={handleSubmit} />
       <TaskList tasks={displayedTasks} handleDelete={handleDelete} />
     </div>
